@@ -1,2 +1,2 @@
-# tictok_clone
-Nomadcoders flutter tictok clone
+# tiktok_clone
+Nomadcoders flutter tiktok clone
