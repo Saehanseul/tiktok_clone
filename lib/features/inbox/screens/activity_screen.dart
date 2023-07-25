@@ -16,9 +16,9 @@ class _ActivityScreenState extends State<ActivityScreen>
 
   bool _showBarrier = false;
 
-  late AnimationController _animationController = AnimationController(
+  late final AnimationController _animationController = AnimationController(
     vsync: this,
-    duration: Duration(
+    duration: const Duration(
       milliseconds: 200,
     ),
   );
@@ -27,7 +27,7 @@ class _ActivityScreenState extends State<ActivityScreen>
       Tween(begin: 0.0, end: 0.5).animate(_animationController);
 
   late final Animation<Offset> _panelAnimation = Tween(
-    begin: Offset(0, -1),
+    begin: const Offset(0, -1),
     end: Offset.zero,
   ).animate(_animationController);
 
@@ -92,12 +92,13 @@ class _ActivityScreenState extends State<ActivityScreen>
           onTap: _toggleAnimations,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Text("All activity"),
+              const Text("All activity"),
               Gaps.h2,
               RotationTransition(
                 turns: _arrowAnimation,
-                child: FaIcon(
+                child: const FaIcon(
                   FontAwesomeIcons.chevronDown,
                   size: Sizes.size14,
                 ),
@@ -221,7 +222,7 @@ class _ActivityScreenState extends State<ActivityScreen>
           SlideTransition(
             position: _panelAnimation,
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(Sizes.size5),
@@ -243,7 +244,7 @@ class _ActivityScreenState extends State<ActivityScreen>
                           Gaps.h20,
                           Text(
                             tab["title"],
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
