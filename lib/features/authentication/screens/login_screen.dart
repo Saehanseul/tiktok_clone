@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/screens/login_form_screen.dart';
+import 'package:tiktok_clone/utils.dart';
 
 import '../widgets/auth_button.dart';
 
@@ -40,13 +41,15 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               Gaps.v10,
-              const Text(
-                "Manage your account, check notifications, comments on videos and more.",
-                style: TextStyle(
-                  fontSize: Sizes.size16,
-                  color: Colors.black45,
+              const Opacity(
+                opacity: 0.7,
+                child: Text(
+                  "Manage your account, check notifications, comments on videos and more.",
+                  style: TextStyle(
+                    fontSize: Sizes.size16,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
               ),
               Gaps.v40,
               GestureDetector(
@@ -67,7 +70,7 @@ class LoginScreen extends StatelessWidget {
       ),
       bottomNavigationBar: BottomAppBar(
         elevation: 1,
-        color: Colors.grey.shade100,
+        color: isDarkMode(context) ? null : Colors.grey.shade100,
         child: Padding(
           padding: const EdgeInsets.symmetric(
             vertical: Sizes.size32,

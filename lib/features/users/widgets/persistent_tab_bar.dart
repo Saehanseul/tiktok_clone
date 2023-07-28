@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/breakpoints.dart';
 
 import '../../../constants/sizes.dart';
 
@@ -18,27 +18,30 @@ class PersistentTabBar extends SliverPersistentHeaderDelegate {
           ),
         ),
       ),
-      child: TabBar(
-        labelPadding: EdgeInsets.symmetric(
-          vertical: Sizes.size10,
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: Breakpoints.sm),
+        child: const TabBar(
+          labelPadding: EdgeInsets.symmetric(
+            vertical: Sizes.size10,
+          ),
+          indicatorSize: TabBarIndicatorSize.label,
+          indicatorColor: Colors.black,
+          labelColor: Colors.black,
+          tabs: [
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: Sizes.size20,
+              ),
+              child: Icon(Icons.grid_4x4_rounded),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: Sizes.size20,
+              ),
+              child: FaIcon(FontAwesomeIcons.heart),
+            ),
+          ],
         ),
-        indicatorSize: TabBarIndicatorSize.label,
-        indicatorColor: Colors.black,
-        labelColor: Colors.black,
-        tabs: [
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: Sizes.size20,
-            ),
-            child: Icon(Icons.grid_4x4_rounded),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: Sizes.size20,
-            ),
-            child: FaIcon(FontAwesomeIcons.heart),
-          ),
-        ],
       ),
     );
   }

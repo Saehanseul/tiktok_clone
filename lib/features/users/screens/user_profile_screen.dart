@@ -337,7 +337,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             child: FadeInImage.assetNetwork(
                               placeholder: "assets/images/ocean.jpeg",
                               image:
-                                  "https://health.chosun.com/site/data/img_dir/2023/05/31/2023053102582_0.jpg",
+                                  "https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F6CEcF%2FbtqxVzYzsYJ%2FhW9z8hX5DgILkKPk8AYr70%2Fimg.png",
                               fit: BoxFit.cover,
                             ),
                           ),

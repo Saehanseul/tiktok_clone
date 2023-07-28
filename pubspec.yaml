@@ -37,7 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   font_awesome_flutter: ^10.5.0
   video_player: ^2.7.0
-  visibility_detector: ^0.4.0+2
+  visibility_detector: ^0.4.0+2 # 현재 화면 보고 있는지 체크
+  google_fonts: ^5.1.0
 
 dev_dependencies:
   flutter_test:

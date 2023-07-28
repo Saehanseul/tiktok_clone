@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/main_navigation/screens/main_navigation_screen.dart';
+import 'package:tiktok_clone/utils.dart';
 
 enum Direction { right, left }
 
@@ -48,7 +49,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
     Navigator.of(context).pushAndRemoveUntil(
         // 이전 스크린 지우기 가능
         MaterialPageRoute(
-          builder: (context) => MainNavigationScreen(),
+          builder: (context) => const MainNavigationScreen(),
         ),
         (route) =>
             false // true 라우트 삭제 안함 (다음 페이지에서 뒤로가기 버튼 있음) / false해야 라우트 삭제함
@@ -113,6 +114,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
           ),
         ),
         bottomNavigationBar: BottomAppBar(
+          color: isDarkMode(context) ? Colors.black : Colors.white,
           child: Padding(
             padding: const EdgeInsets.symmetric(
               vertical: Sizes.size24,
