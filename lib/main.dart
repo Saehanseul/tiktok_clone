@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/main_navigation/screens/main_navigation_screen.dart';
+import 'package:tiktok_clone/features/authentication/screens/sign_up_screen.dart';
+import 'package:tiktok_clone/generated/l10n.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // 앱 시작전에 초기화
@@ -24,9 +26,23 @@ class TikTokApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    S.load(const Locale("en")); // locale 강제 세팅
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Tiktok clone',
+      localizationsDelegates: const [
+        S.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      // localizationsDelegates:[
+      //   Global
+      // ],
+      supportedLocales: const [
+        Locale('en'),
+        Locale('ko'),
+      ],
       themeMode: ThemeMode.system, // 사용자의 설정에 따름
       darkTheme: ThemeData(
         scaffoldBackgroundColor: Colors.black,
@@ -40,6 +56,11 @@ class TikTokApp extends StatelessWidget {
         ),
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.grey.shade900,
+          titleTextStyle: const TextStyle(
+            color: Colors.white,
+            fontSize: Sizes.size16 + Sizes.size2,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         textTheme: Typography.whiteMountainView,
         tabBarTheme: const TabBarTheme(
@@ -81,6 +102,7 @@ class TikTokApp extends StatelessWidget {
       ),
 
       theme: ThemeData(
+        // useMaterial3: true, // 머티리얼3 사용. bottomAppBar는 Conotainer로 바꿔야함
         // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         // useMaterial3: true,
         textTheme: Typography.blackMountainView,
@@ -136,11 +158,11 @@ class TikTokApp extends StatelessWidget {
           labelColor: Colors.black,
           indicatorColor: Colors.black,
         ),
-        listTileTheme: ListTileThemeData(
+        listTileTheme: const ListTileThemeData(
           iconColor: Colors.black,
         ),
       ),
-      home: const MainNavigationScreen(),
+      home: const SignUpScreen(),
     );
   }
 }
