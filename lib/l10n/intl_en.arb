@@ -1,11 +1,16 @@
 {
-  "signUpTitle": "Sign up for {nameOfTheApp}",
+  "signUpTitle": "Sign up for {nameOfTheApp} {when}",
   "@signUpTitle": {
     "description": "The title people see when they open the app for the first time.",
     "placeholders": {
       "nameOfTheApp": {
         "type": "String",
         "example": "Tiktok"
+      },
+      "when": {
+        "type": "DateTime",
+        "format": "yQQQQ / LLLL : Hm",
+        "isCustomDateFormat": "true"
       }
     }
   },
@@ -23,5 +28,35 @@
   "emailPasswordButton": "Use email & password",
   "appleButton": "Continue with Apple",
   "alreadHaveAnAccount": "Alread have an account?",
-  "login": "Log in {gender, select, male{sir} female{madam} other{human}}"
+  "login": "Log in {gender, select, male{sir} female{madam} other{human}}",
+  "likeCount": "{potato}",
+  "@likeCount": {
+    "description": "Anything you want",
+    "placeholders": {
+      "potato": {
+        "type": "int",
+        "format": "compact"
+      }
+    }
+  },
+  "commentCount": "{potato}",
+  "@commentCount": {
+    "description": "Anything you want",
+    "placeholders": {
+      "potato": {
+        "type": "int",
+        "format": "compact"
+      }
+    }
+  },
+  "commentTitle": "{value} {value2, plural, =1{comment} other{comments}}",
+  "@commentTitle": {
+    "description": "Anything you want",
+    "placeholders": {
+      "value": {
+        "type": "int",
+        "format": "compact"
+      }
+    }
+  }
 }

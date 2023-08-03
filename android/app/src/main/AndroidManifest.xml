@@ -30,4 +30,6 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+    <!-- Gal: If supports API <29 add this key :Gal-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 </manifest>

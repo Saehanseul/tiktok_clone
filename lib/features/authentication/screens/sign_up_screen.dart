@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
@@ -10,22 +11,62 @@ import 'package:tiktok_clone/generated/l10n.dart';
 import 'package:tiktok_clone/utils.dart';
 
 class SignUpScreen extends StatelessWidget {
+  static String routeURL = "/";
+  static const routeName = "signUp";
   const SignUpScreen({super.key});
 
-  void _onLoginTap(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const LoginScreen(),
-      ),
-    );
+  void _onLoginTap(BuildContext context) async {
+    // final result = await Navigator.of(context).push(
+    //   MaterialPageRoute(
+    //     builder: (context) => const LoginScreen(data: data),
+    //   ),
+    // );
+    // print(result);
+    final result = await context.pushNamed(LoginScreen.routeName);
   }
 
   void _onEmailTab(BuildContext context) {
-    Navigator.of(context).push(
+    // Navigator.of(context).push(
+    //   PageRouteBuilder(
+    //     transitionDuration: const Duration(seconds: 5),
+    //     reverseTransitionDuration: const Duration(seconds: 5),
+    //     pageBuilder: (context, animation, secondaryAnimation) =>
+    //         const UsernameScreen(),
+    //     transitionsBuilder: (context, animation, secondaryAnimation, child) {
+    //       final offsetAnimation = Tween(
+    //         begin: const Offset(0, -1),
+    //         end: Offset.zero,
+    //       ).animate(animation);
+    //       return SlideTransition(
+    //         position: offsetAnimation,
+    //         child: FadeTransition(
+    //           opacity: animation,
+    //           child: child,
+    //         ),
+    //       );
+    //     },
+
+    //     /** animation transition example */
+    //     // transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+    //     //     ScaleTransition(
+    //     //   scale: animation,
+    //     //   alignment: Alignment.bottomRight,
+    //     //   child: FadeTransition(
+    //     //     opacity: animation,
+    //     //     child: child,
+    //     //   ),
+    //     // ),
+    //   ),
+    // );
+    // context.push(UsernameScreen.routeName);
+    Navigator.push(
+      context,
       MaterialPageRoute(
         builder: (context) => const UsernameScreen(),
       ),
     );
+
+    // context.push("/users/31seul", extra: {"show": "likes"});
   }
 
   @override
@@ -43,7 +84,7 @@ class SignUpScreen extends StatelessWidget {
                 children: [
                   Gaps.v60,
                   Text(
-                    S.of(context).signUpTitle("TikTok"),
+                    S.of(context).signUpTitle("TikTok", DateTime.now()),
                     // AppLocalizations.of(context)!.signUpTitle("TikTok"),
                     // style: Theme.of(context).textTheme.headlineMedium!
                     // .copyWith(color: Colors.red),

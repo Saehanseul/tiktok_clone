@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/authentication/screens/sign_up_screen.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
+import 'package:tiktok_clone/router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // 앱 시작전에 초기화
@@ -26,8 +26,9 @@ class TikTokApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    S.load(const Locale("en")); // locale 강제 세팅
-    return MaterialApp(
+    S.load(const Locale("ko")); // locale 강제 세팅
+    return MaterialApp.router(
+      routerConfig: router, // goRouter
       debugShowCheckedModeBanner: false,
       title: 'Tiktok clone',
       localizationsDelegates: const [
@@ -100,7 +101,6 @@ class TikTokApp extends StatelessWidget {
         //   ThemeData(brightness: Brightness.dark).textTheme,
         // ),
       ),
-
       theme: ThemeData(
         // useMaterial3: true, // 머티리얼3 사용. bottomAppBar는 Conotainer로 바꿔야함
         // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -162,7 +162,16 @@ class TikTokApp extends StatelessWidget {
           iconColor: Colors.black,
         ),
       ),
-      home: const SignUpScreen(),
+      // home: const SignUpScreen(),
+
+      /** flutter 기본 router 쓸때 사용 regacy */
+      // initialRoute: SignUpScreen.routeName,
+      // routes: {
+      //   SignUpScreen.routeName: (context) => const SignUpScreen(),
+      //   UsernameScreen.routeName: (context) => const UsernameScreen(),
+      //   LoginScreen.routeName: (context) => const LoginScreen(),
+      //   EmailScreen.routeName: (context) => const EmailScreen(),
+      // },
     );
   }
 }

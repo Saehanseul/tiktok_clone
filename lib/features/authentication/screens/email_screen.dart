@@ -5,8 +5,19 @@ import 'package:tiktok_clone/features/authentication/screens/password_screen.dar
 
 import '../widgets/form_button.dart';
 
+class EmailScreenArgs {
+  final String username;
+
+  EmailScreenArgs({required this.username});
+}
+
 class EmailScreen extends StatefulWidget {
-  const EmailScreen({super.key});
+  final String username;
+
+  const EmailScreen({
+    super.key,
+    required this.username,
+  });
 
   @override
   State<EmailScreen> createState() => _EmailScreenState();
@@ -58,6 +69,9 @@ class _EmailScreenState extends State<EmailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    /** navigation 1.0에서 argument넘겼을 때 받는 코드 */
+    // final args = ModalRoute.of(context)!.settings.arguments as EmailScreenArgs;
+
     return GestureDetector(
       onTap: _onScaffoldTap,
       child: Scaffold(
@@ -74,9 +88,9 @@ class _EmailScreenState extends State<EmailScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Gaps.v40,
-              const Text(
-                'What is your email?',
-                style: TextStyle(
+              Text(
+                'What is your email?, ${widget.username}',
+                style: const TextStyle(
                   fontSize: Sizes.size24,
                   fontWeight: FontWeight.w700,
                 ),

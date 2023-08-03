@@ -1,8 +1,11 @@
 {
-  "signUpTitle": "{nameOfTheApp}에 가입하세요",
+  "signUpTitle": "{nameOfTheApp}에 가입하세요 {when}",
   "SignUpSubTitle": "Create a profile, follow other accounts, make your own videos, and more.",
   "emailPasswordButton": "Use email & password",
   "appleButton": "Continue with Apple",
   "alreadHaveAnAccount": "Alread have an account?",
-  "login": "Log in"
+  "login": "Log in",
+  "likeCount": "{potato}",
+  "commentCount": "{potato}",
+  "commentTitle": "{value} {value2, plural, =1{comment} other{comments}}"
 }
