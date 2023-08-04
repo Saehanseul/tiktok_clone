@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
 import 'package:tiktok_clone/features/onboarding/screens/interests_screen.dart';
@@ -20,14 +21,15 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
     if (_formKey.currentState != null) {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
-        Navigator.of(context).pushAndRemoveUntil(
-            // 이전 스크린 지우기 가능
-            MaterialPageRoute(
-              builder: (context) => const InterestsScreen(),
-            ),
-            (route) =>
-                false // true 라우트 삭제 안함 (다음 페이지에서 뒤로가기 버튼 있음) / false해야 라우트 삭제함
-            );
+        context.goNamed(InterestsScreen.routeName);
+        // Navigator.of(context).pushAndRemoveUntil(
+        //     // 이전 스크린 지우기 가능
+        //     MaterialPageRoute(
+        //       builder: (context) => const InterestsScreen(),
+        //     ),
+        //     (route) =>
+        //         false // true 라우트 삭제 안함 (다음 페이지에서 뒤로가기 버튼 있음) / false해야 라우트 삭제함
+        //     );
       }
     }
   }

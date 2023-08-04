@@ -31,7 +31,10 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
   }
 
   void _onNextTap() {
-    context.pushReplacementNamed(InterestsScreen.routeName);
+    context.goNamed(InterestsScreen.routeName);
+    /** goNamed와 pushReplacementNamed이 같음 */
+    // context.pushReplacementNamed(InterestsScreen.routeName);
+
     // if (_birthday.isEmpty) return;
     // Navigator.of(context).pushAndRemoveUntil(
     //     MaterialPageRoute(

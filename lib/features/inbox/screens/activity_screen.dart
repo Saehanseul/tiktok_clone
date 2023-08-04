@@ -5,6 +5,10 @@ import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/utils.dart';
 
 class ActivityScreen extends StatefulWidget {
+  /// const를 쓰고 안쓰고의 차이는 뭐지? 바뀌냐 안바뀌냐지. 그거 말고 차이는??
+  static const String routeName = "activity";
+  static const String routeURL = "/activity";
+
   const ActivityScreen({super.key});
 
   @override
@@ -228,7 +232,7 @@ class _ActivityScreenState extends State<ActivityScreen>
             child: Container(
               decoration: BoxDecoration(
                 color: Theme.of(context).appBarTheme.backgroundColor,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(Sizes.size5),
                   bottomRight: Radius.circular(Sizes.size5),
                 ),

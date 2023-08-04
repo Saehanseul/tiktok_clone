@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/main_navigation/screens/_archived_main_navigation_screen.dart';
 import 'package:tiktok_clone/utils.dart';
 
 enum Direction { right, left }
@@ -46,14 +46,15 @@ class _TutorialScreenState extends State<TutorialScreen> {
   }
 
   void _onEnterAppTap() {
-    Navigator.of(context).pushAndRemoveUntil(
-        // 이전 스크린 지우기 가능
-        MaterialPageRoute(
-          builder: (context) => const MainNavigationScreen(),
-        ),
-        (route) =>
-            false // true 라우트 삭제 안함 (다음 페이지에서 뒤로가기 버튼 있음) / false해야 라우트 삭제함
-        );
+    context.go('/home');
+    // Navigator.of(context).pushAndRemoveUntil(
+    //     // 이전 스크린 지우기 가능
+    //     MaterialPageRoute(
+    //       builder: (context) => const MainNavigationScreen(),
+    //     ),
+    //     (route) =>
+    //         false // true 라우트 삭제 안함 (다음 페이지에서 뒤로가기 버튼 있음) / false해야 라우트 삭제함
+    //     );
   }
 
   @override
