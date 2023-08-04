@@ -55,6 +55,7 @@ dependencies:
   permission_handler: ^10.4.3
   gal: ^1.7.0 # gallery 모듈
   image_picker: ^1.0.1 # gallery에서 이미지 가져오는 모듈
+  provider: ^6.0.5 # 상태관리 모듈
 
 dev_dependencies:
   flutter_test:

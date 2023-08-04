@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:tiktok_clone/common/widgets/video_config/video_config.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -28,6 +30,50 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       body: ListView(
         children: [
+          AnimatedBuilder(
+            animation: isDarkMode,
+            builder: (context, child) => SwitchListTile.adaptive(
+              value: isDarkMode.value,
+              onChanged: (value) {
+                isDarkMode.value = !isDarkMode.value;
+              },
+              title: const Text("Dark Mode"),
+              subtitle: const Text("Make theme mode dark or light"),
+            ),
+          ),
+
+          /// 상태관리 방법 4:  Provider
+          SwitchListTile.adaptive(
+            value: context.watch<VideoConofig>().isMuted,
+            onChanged: (value) {
+              context.read<VideoConofig>().toggleIsMuted();
+            },
+            title: const Text("Auto Mute"),
+            subtitle: const Text("Video will be muted by default."),
+          ),
+          /* /// 상태관리 방법 3: ValueNotifier
+          ValueListenableBuilder(
+            /// ValueListenableBuilder 대신에 위 isDartMode 처럼 AnimatedBuilder 써도 됨
+            valueListenable: videoConfig,
+            builder: (context, value, child) => SwitchListTile.adaptive(
+              value: value,
+              onChanged: (value) {
+                videoConfig.value = !videoConfig.value;
+              },
+              title: const Text("Auto Mute"),
+              subtitle: const Text("Video will be muted by default."),
+            ),
+          ), */
+
+          /* /// 상태관리 방법 1: inherited + statefull widgets
+          SwitchListTile.adaptive(
+            value: VideoConfigData.of(context).autoMute,
+            onChanged: (value) {
+              VideoConfigData.of(context).toggleMuted();
+            },
+            title: const Text("Auto Mute"),
+            subtitle: const Text("Video will be muted by default."),
+          ), */
           CupertinoSwitch(
             value: _notification,
             onChanged: _onNotificationsChanged,

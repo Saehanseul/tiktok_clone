@@ -1,10 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:tiktok_clone/common/widgets/video_config/video_config.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/videos/widgets/video_button.dart';
-import 'package:tiktok_clone/features/videos/widgets/video_comments.dart';
+import 'package:tiktok_clone/features/videos/views/widgets/video_button.dart';
+import 'package:tiktok_clone/features/videos/views/widgets/video_comments.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -53,6 +55,20 @@ class _VideoPostState extends State<VideoPost>
   void initState() {
     super.initState();
     _initVideoPlayer();
+
+/*     /// 상태관리 방법 3: ValueNotifier
+    videoConfig.addListener(() {
+      setState(() {
+        _autoMute = videoConfig.value;
+      });
+    }); */
+
+    /* /// 상태관리 방법 2: ChangeNotifier
+    videoConfig.addListener(() {
+      setState(() {
+        _autoMute = videoConfig.autoMute;
+      });
+    }); */
 
     _animationController = AnimationController(
       vsync: this,
@@ -119,6 +135,11 @@ class _VideoPostState extends State<VideoPost>
 
   @override
   Widget build(BuildContext context) {
+    /* /// 상태관리 방법 1
+    VideoConfigData.of(context).autoMute;
+    /// VideoConfig에 아래 내용을 of로 만들면 직접 쓸 필요 없이 위 처럼 of로 접근 가능
+    final videoConfig =
+        context.dependOnInheritedWidgetOfExactType<VideoConfig>(); */
     return VisibilityDetector(
       key: Key("${widget.index}"),
       onVisibilityChanged: _onVisibilityChanged,
@@ -157,6 +178,21 @@ class _VideoPostState extends State<VideoPost>
               ),
             ),
           ),
+          Positioned(
+            left: 20,
+            top: 40,
+            child: IconButton(
+              onPressed: () {
+                context.read<VideoConofig>().toggleIsMuted();
+              },
+              icon: FaIcon(
+                context.watch<VideoConofig>().isMuted
+                    ? FontAwesomeIcons.volumeOff
+                    : FontAwesomeIcons.volumeHigh,
+                color: Colors.grey.shade500,
+              ),
+            ),
+          ),
           const Positioned(
             bottom: 20,
             left: 10,
@@ -189,6 +225,7 @@ class _VideoPostState extends State<VideoPost>
               ],
             ),
           ),
+
           Positioned(
             bottom: 20,
             right: 10,
