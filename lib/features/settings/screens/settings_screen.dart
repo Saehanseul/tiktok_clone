@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:tiktok_clone/common/widgets/video_config/video_config.dart';
+import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -42,7 +43,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
 
-          /// 상태관리 방법 4:  Provider
+          /// 상태관리 방법 5: Provider + MVVM
+          SwitchListTile.adaptive(
+            // watch는 변하는 값을 계속 관찰
+            value: context.watch<PlaybackConfigViewModel>().muted,
+            onChanged: (value) {
+              // read는 한번만 읽고 끝냄
+              context.read<PlaybackConfigViewModel>().setMuted(value);
+            },
+            title: const Text("Mute video"),
+            subtitle: const Text("Video will be muted by default."),
+          ),
+          SwitchListTile.adaptive(
+            // watch는 변하는 값을 계속 관찰
+            value: context.watch<PlaybackConfigViewModel>().autoplay,
+            onChanged: (value) {
+              // read는 한번만 읽고 끝냄
+              context.read<PlaybackConfigViewModel>().setAutoplay(value);
+            },
+            title: const Text("Auto play"),
+            subtitle: const Text("Video will start playing automatically"),
+          ),
+          /* /// 상태관리 방법 4:  Provider
           SwitchListTile.adaptive(
             value: context.watch<VideoConofig>().isMuted,
             onChanged: (value) {
@@ -50,7 +72,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             },
             title: const Text("Auto Mute"),
             subtitle: const Text("Video will be muted by default."),
-          ),
+          ), */
           /* /// 상태관리 방법 3: ValueNotifier
           ValueListenableBuilder(
             /// ValueListenableBuilder 대신에 위 isDartMode 처럼 AnimatedBuilder 써도 됨
