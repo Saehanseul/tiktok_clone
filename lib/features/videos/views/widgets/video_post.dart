@@ -1,10 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/video_button.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/video_comments.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
@@ -87,9 +85,10 @@ class _VideoPostState extends State<VideoPost>
     //   setState(() {});
     // });
 
+    /* /// 상태관리 방법 5: Provider + MVVM
     context
         .read<PlaybackConfigViewModel>()
-        .addListener(_onPlaybackConfigChanged);
+        .addListener(_onPlaybackConfigChanged); */
   }
 
   @override
@@ -101,8 +100,11 @@ class _VideoPostState extends State<VideoPost>
 
   Future<void> _onPlaybackConfigChanged() async {
     if (!mounted) return;
-    final muted = context.read<PlaybackConfigViewModel>().muted;
-    if (muted) {
+
+    /* /// 상태관리 방법 5: Provider + MVVM
+    final muted = context.read<PlaybackConfigViewModel>().muted; */
+
+    if (false) {
       await _videoPlayerController.setVolume(0);
     } else {
       await _videoPlayerController.setVolume(1);
@@ -115,8 +117,11 @@ class _VideoPostState extends State<VideoPost>
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
       //설정에 autoplay가 켜져 있을때만 실행
-      final autoplay = context.read<PlaybackConfigViewModel>().autoplay;
-      if (autoplay) {
+
+      /* /// 상태관리 방법 5: Provider + MVVM
+      final autoplay = context.read<PlaybackConfigViewModel>().autoplay; */
+
+      if (false) {
         _videoPlayerController.play();
       }
     }
@@ -201,12 +206,15 @@ class _VideoPostState extends State<VideoPost>
             top: 40,
             child: IconButton(
               onPressed: () {
+                /* /// 상태관리 방법 5: Provider + MVVM
                 context
                     .read<PlaybackConfigViewModel>()
-                    .setMuted(!context.read<PlaybackConfigViewModel>().muted);
+                    .setMuted(!context.read<PlaybackConfigViewModel>().muted); */
               },
               icon: FaIcon(
-                context.watch<PlaybackConfigViewModel>().muted
+                /* /// 상태관리 방법 5: Provider + MVVM
+                context.watch<PlaybackConfigViewModel>().muted */
+                false
                     ? FontAwesomeIcons.volumeOff
                     : FontAwesomeIcons.volumeHigh,
                 color: Colors.grey.shade500,

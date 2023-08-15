@@ -2,9 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:tiktok_clone/common/widgets/video_config/video_config.dart';
-import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -43,7 +41,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
 
-          /// 상태관리 방법 5: Provider + MVVM
+          SwitchListTile.adaptive(
+            value: false,
+            onChanged: (value) {},
+            title: const Text("Mute video"),
+            subtitle: const Text("Video will be muted by default."),
+          ),
+          SwitchListTile.adaptive(
+            value: false,
+            onChanged: (value) {},
+            title: const Text("Auto play"),
+            subtitle: const Text("Video will start playing automatically"),
+          ),
+
+          /* /// 상태관리 방법 5: Provider + MVVM
           SwitchListTile.adaptive(
             // watch는 변하는 값을 계속 관찰
             value: context.watch<PlaybackConfigViewModel>().muted,
@@ -63,7 +74,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
             },
             title: const Text("Auto play"),
             subtitle: const Text("Video will start playing automatically"),
-          ),
+          ), */
+
           /* /// 상태관리 방법 4:  Provider
           SwitchListTile.adaptive(
             value: context.watch<VideoConofig>().isMuted,
