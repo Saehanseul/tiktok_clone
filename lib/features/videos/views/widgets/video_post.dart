@@ -1,15 +1,17 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/video_button.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/video_comments.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
-class VideoPost extends StatefulWidget {
+class VideoPost extends ConsumerStatefulWidget {
   final Function onVideoFinished;
 
   final int index;
@@ -18,10 +20,10 @@ class VideoPost extends StatefulWidget {
       {super.key, required this.onVideoFinished, required this.index});
 
   @override
-  State<VideoPost> createState() => _VideoPostState();
+  VideoPostState createState() => VideoPostState();
 }
 
-class _VideoPostState extends State<VideoPost>
+class VideoPostState extends ConsumerState<VideoPost>
     with SingleTickerProviderStateMixin {
   final VideoPlayerController _videoPlayerController =
       VideoPlayerController.asset("assets/videos/video1.mp4");
@@ -99,12 +101,13 @@ class _VideoPostState extends State<VideoPost>
   }
 
   Future<void> _onPlaybackConfigChanged() async {
+    print("mounted $mounted");
     if (!mounted) return;
 
     /* /// 상태관리 방법 5: Provider + MVVM
     final muted = context.read<PlaybackConfigViewModel>().muted; */
 
-    if (false) {
+    if (ref.read(playbackConfigProvider).muted) {
       await _videoPlayerController.setVolume(0);
     } else {
       await _videoPlayerController.setVolume(1);
@@ -121,7 +124,7 @@ class _VideoPostState extends State<VideoPost>
       /* /// 상태관리 방법 5: Provider + MVVM
       final autoplay = context.read<PlaybackConfigViewModel>().autoplay; */
 
-      if (false) {
+      if (ref.read(playbackConfigProvider).autoplay) {
         _videoPlayerController.play();
       }
     }
@@ -205,7 +208,13 @@ class _VideoPostState extends State<VideoPost>
             left: 20,
             top: 40,
             child: IconButton(
-              onPressed: () {
+              onPressed: () async {
+                // print("volumn change");
+
+                ref
+                    .read(playbackConfigProvider.notifier)
+                    .setMuted(!ref.read(playbackConfigProvider).muted);
+                await _onPlaybackConfigChanged();
                 /* /// 상태관리 방법 5: Provider + MVVM
                 context
                     .read<PlaybackConfigViewModel>()
@@ -214,7 +223,7 @@ class _VideoPostState extends State<VideoPost>
               icon: FaIcon(
                 /* /// 상태관리 방법 5: Provider + MVVM
                 context.watch<PlaybackConfigViewModel>().muted */
-                false
+                ref.watch(playbackConfigProvider).muted
                     ? FontAwesomeIcons.volumeOff
                     : FontAwesomeIcons.volumeHigh,
                 color: Colors.grey.shade500,

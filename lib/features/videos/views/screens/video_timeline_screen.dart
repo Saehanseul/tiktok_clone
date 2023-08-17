@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tiktok_clone/features/videos/view_models/timeline_view_model.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/video_post.dart';
 
-class VideoTimelineScreen extends StatefulWidget {
+class VideoTimelineScreen extends ConsumerStatefulWidget {
   const VideoTimelineScreen({super.key});
 
   @override
-  State<VideoTimelineScreen> createState() => _VideoTimelineScreenState();
+  VideoTimelineScreenState createState() => VideoTimelineScreenState();
 }
 
-class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
+class VideoTimelineScreenState extends ConsumerState<VideoTimelineScreen> {
   int _itemCount = 4;
   final PageController _pageController = PageController();
   final _scrollDuration = const Duration(milliseconds: 250);
@@ -31,7 +33,6 @@ class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
   }
 
   void _onVideoFinished() {
-    return;
     _pageController.nextPage(duration: _scrollDuration, curve: _scrollCurve);
   }
 
@@ -49,22 +50,35 @@ class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      displacement: 20,
-      edgeOffset: 50,
-      strokeWidth: 5,
-      backgroundColor: Colors.red,
-      color: Colors.blue,
-      onRefresh: _onRefresh,
-      child: PageView.builder(
-        // pageSnapping: false,
-        controller: _pageController,
-        onPageChanged: _onPageChanged,
-        scrollDirection: Axis.vertical,
-        itemCount: _itemCount,
-        itemBuilder: (context, index) =>
-            VideoPost(onVideoFinished: _onVideoFinished, index: index),
-      ),
-    );
+    return ref.watch(timelineProvider).when(
+          loading: () => const Center(
+            child: CircularProgressIndicator(),
+          ),
+          error: (error, stackTrace) => Center(
+            child: Text(
+              "Could not load video: $error",
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+          data: (videos) => RefreshIndicator(
+            displacement: 20,
+            edgeOffset: 50,
+            strokeWidth: 5,
+            backgroundColor: Colors.red,
+            color: Colors.blue,
+            onRefresh: _onRefresh,
+            child: PageView.builder(
+              // pageSnapping: false,
+              controller: _pageController,
+              onPageChanged: _onPageChanged,
+              scrollDirection: Axis.vertical,
+              itemCount: videos.length,
+              itemBuilder: (context, index) =>
+                  VideoPost(onVideoFinished: _onVideoFinished, index: index),
+            ),
+          ),
+        );
   }
 }
