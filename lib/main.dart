@@ -46,15 +46,15 @@ void main() async {
   ], child: const TikTokApp()));
 }
 
-class TikTokApp extends StatelessWidget {
+class TikTokApp extends ConsumerWidget {
   const TikTokApp({super.key});
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     S.load(const Locale("ko")); // locale 강제 세팅
     return MaterialApp.router(
-      routerConfig: router, // goRouter
+      routerConfig: ref.watch(routerProvider), // goRouter
       debugShowCheckedModeBanner: false,
       title: 'Tiktok clone',
       localizationsDelegates: const [
