@@ -26,6 +26,14 @@ class AuthenticationRepository {
     await _firebaseAuth.signInWithEmailAndPassword(
         email: email, password: password);
   }
+
+  Future<void> githubSignIn() async {
+    try {
+      await _firebaseAuth.signInWithProvider(GithubAuthProvider());
+    } catch (e) {
+      print("catch e: $e");
+    }
+  }
 }
 
 final authRepo = Provider((ref) => AuthenticationRepository());
