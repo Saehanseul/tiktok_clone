@@ -31,7 +31,7 @@ class _BirthdayScreenState extends ConsumerState<BirthdayScreen> {
   }
 
   void _onNextTap() {
-    ref.read(SignUpProvider.notifier).signUp(context);
+    ref.read(signUpProvider.notifier).signUp(context);
     // context.goNamed(InterestsScreen.routeName);
     /** goNamed와 pushReplacementNamed이 같음 */
     // context.pushReplacementNamed(InterestsScreen.routeName);
@@ -102,7 +102,7 @@ class _BirthdayScreenState extends ConsumerState<BirthdayScreen> {
             Gaps.v28,
             GestureDetector(
               onTap: _onNextTap,
-              child: FormButton(disabled: ref.watch(SignUpProvider).isLoading),
+              child: FormButton(disabled: ref.watch(signUpProvider).isLoading),
             ),
           ],
         ),
