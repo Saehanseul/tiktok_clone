@@ -31,7 +31,13 @@ class _BirthdayScreenState extends ConsumerState<BirthdayScreen> {
   }
 
   void _onNextTap() {
+    final state = ref.read(signUpForm.notifier).state;
+    ref.read(signUpForm.notifier).state = {
+      ...state,
+      "birth": _birthdayController.value.text,
+    };
     ref.read(signUpProvider.notifier).signUp(context);
+
     // context.goNamed(InterestsScreen.routeName);
     /** goNamed와 pushReplacementNamed이 같음 */
     // context.pushReplacementNamed(InterestsScreen.routeName);

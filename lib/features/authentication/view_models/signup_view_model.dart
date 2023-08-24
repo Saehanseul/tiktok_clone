@@ -28,7 +28,7 @@ class SignUpViewModel extends AsyncNotifier<void> {
 
       // 회원가입하면서 다른 유저들이 볼 수 있는 유저 디비 만듬
       if (userCredential.user != null) {
-        await users.createAccount(userCredential);
+        await users.createProfile(userCredential, form);
       }
     });
 
