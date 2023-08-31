@@ -21,7 +21,7 @@ class TimelineViewModel extends AsyncNotifier<List<VideoModel>> {
     await Future.delayed(
       const Duration(seconds: 5),
     );
-    throw Exception("OMG cant fetch");
+    // throw Exception("OMG cant fetch");
     return _list;
   }
 }

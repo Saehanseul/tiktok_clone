@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/breakpoints.dart';
 import 'package:tiktok_clone/utils.dart';
 
-import '../../../constants/sizes.dart';
+import '../../../../constants/sizes.dart';
 
 class PersistentTabBar extends SliverPersistentHeaderDelegate {
   @override
@@ -21,12 +21,12 @@ class PersistentTabBar extends SliverPersistentHeaderDelegate {
         ),
       ),
       child: TabBar(
-        labelPadding: EdgeInsets.symmetric(
+        labelPadding: const EdgeInsets.symmetric(
           vertical: Sizes.size10,
         ),
         indicatorSize: TabBarIndicatorSize.label,
         indicatorColor: Theme.of(context).tabBarTheme.indicatorColor,
-        tabs: [
+        tabs: const [
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: Sizes.size20,
