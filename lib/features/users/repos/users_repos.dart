@@ -23,6 +23,10 @@ class UserRepository {
     final fileRef = _storage.ref().child("avatars/$fileName"); // 공간만 만듬
     final task = await fileRef.putFile(file); // 실제로 파일을 넣음
   }
+
+  Future<void> updateUser(String uid, Map<String, dynamic> data) async {
+    await _db.collection("users").doc(uid).update(data);
+  }
 }
 
 final UserRepo = Provider(
