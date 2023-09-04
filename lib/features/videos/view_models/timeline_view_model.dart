@@ -11,8 +11,8 @@ class TimelineViewModel extends AsyncNotifier<List<VideoModel>> {
     await Future.delayed(
       const Duration(seconds: 5),
     );
-    final newVideo = VideoModel(title: "${DateTime.now()}");
-    _list = [..._list, newVideo];
+    // final newVideo = VideoModel(title: "${DateTime.now()}");
+    _list = [..._list];
     state = AsyncValue.data(_list);
   }
 

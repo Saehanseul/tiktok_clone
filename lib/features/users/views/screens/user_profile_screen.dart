@@ -43,7 +43,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
           ),
           CupertinoDialogAction(
             onPressed: () {
-              ref.read(usersProvider.notifier).updateLink(bio);
+              ref.read(usersProvider.notifier).updateLink(link);
               Navigator.of(context).pop();
             },
             child: const Text('OK'),
