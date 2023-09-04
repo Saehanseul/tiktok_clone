@@ -21,12 +21,19 @@ class UserProfileScreen extends ConsumerStatefulWidget {
 }
 
 class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
+  String link = "";
+
   void _onEditPressed() {
     showCupertinoDialog(
       context: context,
       builder: (context) => CupertinoAlertDialog(
         title: const Text("Edit profile"),
-        content: const CupertinoTextField(),
+        content: CupertinoTextField(
+          placeholder: "link",
+          onChanged: (value) {
+            link = value;
+          },
+        ),
         actions: [
           CupertinoDialogAction(
             onPressed: () {
@@ -36,6 +43,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
           ),
           CupertinoDialogAction(
             onPressed: () {
+              ref.read(usersProvider.notifier).updateLink(bio);
               Navigator.of(context).pop();
             },
             child: const Text('OK'),
@@ -62,6 +70,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
         loading: () =>
             const Center(child: CircularProgressIndicator.adaptive()),
         data: (data) {
+          print(data.link);
           return Scaffold(
             backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
             body: SafeArea(
@@ -332,17 +341,17 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                               ),
                             ),
                             Gaps.v14,
-                            const Row(
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                FaIcon(
+                                const FaIcon(
                                   FontAwesomeIcons.link,
                                   size: Sizes.size12,
                                 ),
                                 Gaps.h4,
                                 Text(
-                                  "https://nomadcoders.co",
-                                  style: TextStyle(
+                                  data.link,
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
