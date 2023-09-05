@@ -180,8 +180,10 @@ class VideoPostState extends ConsumerState<VideoPost>
           Positioned.fill(
             child: _videoPlayerController.value.isInitialized
                 ? VideoPlayer(_videoPlayerController)
-                : Image.network(widget.videoData.thumbnailUrl,
-                    fit: BoxFit.cover),
+                : false
+                    ? Image.network(widget.videoData.thumbnailUrl,
+                        fit: BoxFit.cover)
+                    : Container(),
           ),
           Positioned.fill(
             child: GestureDetector(
