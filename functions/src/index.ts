@@ -25,4 +25,38 @@ import * as admin from "firebase-admin";
 admin.initializeApp();
 
 export const onVideoCreated = functions.firestore
-  .document("videos/{videoId}").onCreate((snap, context) => {});
+  .document("videos/{videoId}")
+  .onCreate(async (snapshot, context) => {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const spawn = require("child-process-promise").spawn;
+    const video = snapshot.data();
+    await spawn("ffmpeg", [
+      "-i",
+      video.fileUrl,
+      "-ss",
+      "00:00:01.000",
+      "-vframes",
+      "1",
+      "-vf",
+      "scale=150:-1",
+      `/tmp/${snapshot.id}.jpg`,
+    ]);
+    const storage = admin.storage();
+    const [file, _] = await storage.bucket().upload(`/tmp/${snapshot.id}.jpg`, {
+      destination: `thumbnails/${snapshot.id}.jpg`,
+    });
+    await file.makePublic();
+    await snapshot.ref.update({ thumbnailUrl: file.publicUrl() });
+
+    // video에 대한 인덱싱을 해놔서 리소스 낭비를 줄이자
+    const db = admin.firestore();
+    await db
+      .collection("users")
+      .doc(video.creatorUid)
+      .collection("videos")
+      .doc(snapshot.id)
+      .set({
+        videoId: snapshot.id,
+        thumbnailUrl: file.publicUrl(),
+      });
+  });

@@ -11,8 +11,7 @@ module.exports = {
     "plugin:import/typescript",
     "google",
     "plugin:@typescript-eslint/recommended",
-    // "plugin:prettier/recommended", // 추가 하니깐 lint가 안먹혀서 뺌
-    // "prettier/@typescript-eslint", // 추가
+    "plugin:prettier/recommended", // 추가 하니깐 lint가 안먹혀서 뺌
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
@@ -25,8 +24,8 @@ module.exports = {
   ],
   plugins: ["@typescript-eslint", "import"],
   rules: {
-    "quotes": ["error", "double"],
+    quotes: ["error", "double"],
     "import/no-unresolved": 0,
-    "indent": ["error", 2],
+    indent: ["error", 2],
   },
 };

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/videos/models/video_model.dart';
 import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/video_button.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/video_comments.dart';
@@ -13,11 +14,16 @@ import 'package:visibility_detector/visibility_detector.dart';
 
 class VideoPost extends ConsumerStatefulWidget {
   final Function onVideoFinished;
+  final VideoModel videoData;
 
   final int index;
 
-  const VideoPost(
-      {super.key, required this.onVideoFinished, required this.index});
+  const VideoPost({
+    super.key,
+    required this.onVideoFinished,
+    required this.index,
+    required this.videoData,
+  });
 
   @override
   VideoPostState createState() => VideoPostState();
@@ -101,7 +107,6 @@ class VideoPostState extends ConsumerState<VideoPost>
   }
 
   Future<void> _onPlaybackConfigChanged() async {
-    print("mounted $mounted");
     if (!mounted) return;
 
     /* /// 상태관리 방법 5: Provider + MVVM
@@ -175,7 +180,8 @@ class VideoPostState extends ConsumerState<VideoPost>
           Positioned.fill(
             child: _videoPlayerController.value.isInitialized
                 ? VideoPlayer(_videoPlayerController)
-                : Container(color: Colors.teal),
+                : Image.network(widget.videoData.thumbnailUrl,
+                    fit: BoxFit.cover),
           ),
           Positioned.fill(
             child: GestureDetector(
@@ -230,15 +236,15 @@ class VideoPostState extends ConsumerState<VideoPost>
               ),
             ),
           ),
-          const Positioned(
+          Positioned(
             bottom: 20,
             left: 10,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "@니꼬",
-                  style: TextStyle(
+                  "@${widget.videoData.creator}",
+                  style: const TextStyle(
                     fontSize: Sizes.size20,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -249,9 +255,9 @@ class VideoPostState extends ConsumerState<VideoPost>
                   SizedBox(
                     width: 300,
                     child: Text(
-                      "asldfjsdlkfjsdklfjlkasdfasdfsadfasdfasdfasdfasfasdfasdfasdfads",
+                      widget.videoData.description,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: Sizes.size16,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -268,20 +274,19 @@ class VideoPostState extends ConsumerState<VideoPost>
             right: 10,
             child: Column(
               children: [
-                const CircleAvatar(
+                CircleAvatar(
                   backgroundColor: Colors.yellow,
                   foregroundColor: Colors.blue,
                   foregroundImage: NetworkImage(
-                    // "https://simg.donga.com/ugc/MLBPARK/Board/16/66/14/29/1666142938918.jpg",
-                    "https://avatars.githubusercontent.com/u/25199891?v=4",
+                    "https://firebasestorage.googleapis.com/v0/b/tiktok-31seul.appspot.com/o/avatars%2F${widget.videoData.creatorUid}?alt=media",
                   ),
                   radius: 25,
-                  child: Text("한슬"),
+                  child: Text("@${widget.videoData.creator}"),
                 ),
                 Gaps.v24,
                 VideoButton(
                   icon: FontAwesomeIcons.solidHeart,
-                  text: S.of(context).likeCount(30000),
+                  text: S.of(context).likeCount(widget.videoData.likes),
                 ),
                 Gaps.v24,
                 GestureDetector(
