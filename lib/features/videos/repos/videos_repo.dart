@@ -36,6 +36,31 @@ class VideosRepository {
       return query.startAfter([lastItemCreatedAt]).get();
     }
   }
+
+  Future<void> likeVideo(String videoId, String userId) async {
+    final query = _db.collection("likes").doc("${videoId}_$userId");
+    final like = await query.get();
+    if (!like.exists) {
+      await query.set(
+        {
+          "createdAt": DateTime.now().millisecondsSinceEpoch,
+        },
+      );
+    } else {
+      await query.delete();
+    }
+  }
+
+  Future<bool> isLikedVideo(String videoId, String userId) async {
+    final query = _db.collection("likes").doc("${videoId}_$userId");
+    final like = await query.get();
+
+    if (like.exists) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
 
 final videosRepo = Provider((ref) => VideosRepository());

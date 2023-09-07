@@ -6,6 +6,7 @@ import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/videos/models/video_model.dart';
 import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
+import 'package:tiktok_clone/features/videos/view_models/video_post_view_model.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/video_button.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/video_comments.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
@@ -37,6 +38,8 @@ class VideoPostState extends ConsumerState<VideoPost>
   late final AnimationController _animationController;
 
   bool _isPaused = false;
+  bool _isLiked = false;
+  int _likeCount = 0;
 
   void _onVideoChange() {
     if (_videoPlayerController.value.isInitialized) {
@@ -47,6 +50,15 @@ class VideoPostState extends ConsumerState<VideoPost>
     }
   }
 
+  void _onLikeTap() {
+    ref.read(videoPostProvider(widget.videoData.id).notifier).likeVideo();
+    setState(() {
+      _isLiked = !_isLiked;
+    });
+
+    _likeCount = _likeCount + (_isLiked ? 1 : -1);
+  }
+
   void _initVideoPlayer() async {
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
@@ -54,6 +66,12 @@ class VideoPostState extends ConsumerState<VideoPost>
       await _videoPlayerController.setVolume(0);
     }
     _videoPlayerController.addListener(_onVideoChange);
+
+    _isLiked = await ref
+        .watch(videoPostProvider(widget.videoData.id).notifier)
+        .isLikedVideo();
+    _likeCount = widget.videoData.likes;
+
     setState(() {});
   }
 
@@ -61,7 +79,6 @@ class VideoPostState extends ConsumerState<VideoPost>
   void initState() {
     super.initState();
     _initVideoPlayer();
-
 /*     /// 상태관리 방법 3: ValueNotifier
     videoConfig.addListener(() {
       setState(() {
@@ -286,9 +303,13 @@ class VideoPostState extends ConsumerState<VideoPost>
                   child: Text("@${widget.videoData.creator}"),
                 ),
                 Gaps.v24,
-                VideoButton(
-                  icon: FontAwesomeIcons.solidHeart,
-                  text: S.of(context).likeCount(widget.videoData.likes),
+                GestureDetector(
+                  onTap: _onLikeTap,
+                  child: VideoButton(
+                    icon: FontAwesomeIcons.solidHeart,
+                    text: S.of(context).likeCount(_likeCount),
+                    isLiked: _isLiked,
+                  ),
                 ),
                 Gaps.v24,
                 GestureDetector(

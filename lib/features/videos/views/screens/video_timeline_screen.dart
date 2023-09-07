@@ -19,6 +19,7 @@ class VideoTimelineScreenState extends ConsumerState<VideoTimelineScreen> {
   List<Color> colors = [Colors.blue, Colors.yellow, Colors.pink, Colors.teal];
 
   void _onPageChanged(int page) {
+    print("onPagechanges: $page");
     _pageController.animateToPage(
       page,
       duration: _scrollDuration,
@@ -31,6 +32,7 @@ class VideoTimelineScreenState extends ConsumerState<VideoTimelineScreen> {
   }
 
   void _onVideoFinished() {
+    print("onVideoFinished");
     _pageController.nextPage(duration: _scrollDuration, curve: _scrollCurve);
   }
 
@@ -41,9 +43,7 @@ class VideoTimelineScreenState extends ConsumerState<VideoTimelineScreen> {
   }
 
   Future<void> _onRefresh() {
-    return Future.delayed(
-      const Duration(seconds: 5),
-    );
+    return ref.watch(timelineProvider.notifier).refresh();
   }
 
   @override
@@ -77,6 +77,7 @@ class VideoTimelineScreenState extends ConsumerState<VideoTimelineScreen> {
               itemCount: videos.length,
               itemBuilder: (context, index) {
                 final videoData = videos[index];
+                print("index: $index");
                 return VideoPost(
                   onVideoFinished: _onVideoFinished,
                   index: index,
