@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/inbox/models/chat_room_model.dart';
 import 'package:tiktok_clone/features/inbox/screens/chat_detail_screen.dart';
+import 'package:tiktok_clone/features/inbox/view_models/chat_list_view_model.dart';
 
-class ChatsScreen extends StatefulWidget {
+class ChatsScreen extends ConsumerStatefulWidget {
   static String routeName = "chats";
   static String routeURL = "/chats";
   const ChatsScreen({super.key});
 
   @override
-  State<ChatsScreen> createState() => _ChatsScreenState();
+  ConsumerState<ChatsScreen> createState() => _ChatsScreenState();
 }
 
-class _ChatsScreenState extends State<ChatsScreen> {
+class _ChatsScreenState extends ConsumerState<ChatsScreen> {
   final GlobalKey<AnimatedListState> _key = GlobalKey<AnimatedListState>();
 
   final List<int> _item = [];
@@ -21,6 +24,12 @@ class _ChatsScreenState extends State<ChatsScreen> {
   final Duration _duration = const Duration(
     milliseconds: 500,
   );
+
+  @override
+  void initState() {
+    super.initState();
+    // ref.read(chatListProvider.notifier).getChatList();
+  }
 
   void _addItem() {
     if (_key.currentState != null) {
@@ -32,29 +41,30 @@ class _ChatsScreenState extends State<ChatsScreen> {
     }
   }
 
-  void _deleteItem(int index) {
-    if (_key.currentState != null) {
-      _key.currentState!.removeItem(
-        index,
-        (context, animation) => SizeTransition(
-            sizeFactor: animation,
-            child: Container(color: Colors.red, child: _makeTile(index))),
-        duration: _duration,
-      );
-      _item.removeAt(index);
-    }
+  void _deleteItem(String index) {
+    // if (_key.currentState != null) {
+    //   _key.currentState!.removeItem(
+    //     index,
+    //     (context, animation) => SizeTransition(
+    //         sizeFactor: animation,
+    //         child: Container(color: Colors.red, child: _makeTile(index))),
+    //     duration: _duration,
+    //   );
+    //   _item.removeAt(index);
+    // }
   }
 
-  void _onChatTap(int index) {
+  void _onChatTap(String uid) {
     context.pushNamed(ChatDetailScreen.routeName, pathParameters: {
-      "chatId": "$index",
+      "chatId": uid,
     });
   }
 
-  Widget _makeTile(int index) {
+  Widget _makeTile(ChatRoomModel room) {
+    final uid = room.roomId;
     return ListTile(
-      onLongPress: () => _deleteItem(index),
-      onTap: () => _onChatTap(index),
+      onLongPress: () => _deleteItem(uid),
+      onTap: () => _onChatTap(uid),
       leading: const CircleAvatar(
         radius: 30,
         foregroundImage: NetworkImage(
@@ -67,7 +77,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Text(
-              "31seul ($index)",
+              "31seul ${room.personBUid}",
               style: const TextStyle(
                 fontWeight: FontWeight.w600,
               ),
@@ -99,23 +109,34 @@ class _ChatsScreenState extends State<ChatsScreen> {
           ),
         ],
       ),
-      body: AnimatedList(
-        key: _key,
-        padding: const EdgeInsets.symmetric(
-          vertical: Sizes.size10,
-        ),
-        itemBuilder: (context, index, animation) {
-          return FadeTransition(
-            key: UniqueKey(),
-            opacity: animation,
-            child: SizeTransition(
-              //ScaleTrasition도 있음
-              sizeFactor: animation,
-              child: _makeTile(index),
+      body: ref.watch(chatListProvider).when(
+            data: (chatRooms) {
+              return AnimatedList(
+                initialItemCount: chatRooms.length,
+                key: _key,
+                padding: const EdgeInsets.symmetric(
+                  vertical: Sizes.size10,
+                ),
+                itemBuilder: (context, index, animation) {
+                  return FadeTransition(
+                    key: UniqueKey(),
+                    opacity: animation,
+                    child: SizeTransition(
+                      //ScaleTrasition도 있음
+                      sizeFactor: animation,
+                      child: _makeTile(chatRooms[index]),
+                    ),
+                  );
+                },
+              );
+            },
+            error: (error, stackTrace) => Center(
+              child: Text(
+                error.toString(),
+              ),
             ),
-          );
-        },
-      ),
+            loading: () => const Center(child: CircularProgressIndicator()),
+          ),
     );
   }
 }

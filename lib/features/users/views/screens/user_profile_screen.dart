@@ -70,7 +70,6 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
         loading: () =>
             const Center(child: CircularProgressIndicator.adaptive()),
         data: (data) {
-          print(data.link);
           return Scaffold(
             backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
             body: SafeArea(
