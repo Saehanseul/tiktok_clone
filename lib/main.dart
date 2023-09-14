@@ -52,7 +52,7 @@ class TikTokApp extends ConsumerWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    S.load(const Locale("ko")); // locale 강제 세팅
+    // S.load(const Locale("ko")); // locale 강제 세팅
     return MaterialApp.router(
       routerConfig: ref.watch(routerProvider), // goRouter
       debugShowCheckedModeBanner: false,
