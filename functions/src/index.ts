@@ -81,6 +81,23 @@ export const onLikeCreated = functions.firestore
       .set({
         createdAt: admin.firestore.FieldValue.serverTimestamp(),
       });
+    const video = (await db.collection("videos").doc(videoId).get()).data();
+    if (video) {
+      const creatorUid = video.creatorUid;
+      const user = (await db.collection("users").doc(creatorUid).get()).data();
+      if (user) {
+        const token = user.token;
+        admin.messaging().sendToDevice(token, {
+          data: {
+            screen: "123",
+          },
+          notification: {
+            title: "좋아요 알림",
+            body: "좋아요 ❤️",
+          },
+        });
+      }
+    }
   });
 
 export const onLikeRemoved = functions.firestore
