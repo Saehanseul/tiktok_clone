@@ -40,10 +40,15 @@ void main() async {
     child: const TikTokApp(),
   )); */
 
-  runApp(ProviderScope(overrides: [
-    playbackConfigProvider
-        .overrideWith(() => PlaybackConfigViewModel(repository))
-  ], child: const TikTokApp()));
+  runApp(
+    ProviderScope(
+      overrides: [
+        playbackConfigProvider
+            .overrideWith(() => PlaybackConfigViewModel(repository))
+      ],
+      child: const TikTokApp(),
+    ),
+  );
 }
 
 class TikTokApp extends ConsumerWidget {

@@ -85,12 +85,13 @@ class SignUpScreen extends ConsumerWidget {
               child: Column(
                 children: [
                   Gaps.v60,
-                  Text(
-                    S.of(context).signUpTitle("TikTok", DateTime.now()),
+                  const Text(
+                    "Sign up to TikTok",
+                    // S.of(context).signUpTitle("TikTok", DateTime.now()),
                     // AppLocalizations.of(context)!.signUpTitle("TikTok"),
                     // style: Theme.of(context).textTheme.headlineMedium!
                     // .copyWith(color: Colors.red),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: Sizes.size24,
                       fontWeight: FontWeight.w700,
                     ),
@@ -138,9 +139,10 @@ class SignUpScreen extends ConsumerWidget {
                         Expanded(
                           child: GestureDetector(
                             onTap: () => _onEmailTab(context),
-                            child: AuthButton(
-                              icon: const FaIcon(FontAwesomeIcons.solidUser),
-                              text: S.of(context).emailPasswordButton,
+                            child: const AuthButton(
+                              icon: FaIcon(FontAwesomeIcons.solidUser),
+                              // text: S.of(context).emailPasswordButton,
+                              text: "Use email & password",
                             ),
                           ),
                         ),
@@ -179,7 +181,8 @@ class SignUpScreen extends ConsumerWidget {
                   GestureDetector(
                     onTap: () => _onLoginTap(context),
                     child: Text(
-                      S.of(context).login('male'),
+                      // S.of(context).login('male'),
+                      "Log In",
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontWeight: FontWeight.w600,
